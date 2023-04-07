@@ -1,0 +1,10 @@
+//WordPress config
+const defaultConfig = require("@wordpress/scripts/config/webpack.config.js");
+ 
+module.exports = {
+    ...defaultConfig,
+    entry: {
+        "index": "./src/blocks/questions/index.js", 
+        "frontend": "./src/blocks/questions/frontend.js"
+    }
+}

@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pz/questions",
+    "title": "Questions",
+    "category": "text",
+    "description": "Progressively asks questions that refine our profile of a user.",
+    "version": "1",
+    "textdomain": "pz",
+    "editorScript": "file:./index.js",
+    "attributes": { 
+        "questions": {
+            "type": "array",
+            "default": [
+              "First question text",
+              "Second question text"
+            ]
+          },
+        "choices": {
+          "type": "array",
+          "default": [
+            "bologna, garlic, sage, carcass fat",
+            "starfish, whales, dolphins, sea horses"
+          ]
+        },
+        "answers": {
+          "type": "array",
+          "default": [
+            "2", "1"
+          ]
+        }
+        
+     },
+    "style": "file:./index.css"
+}

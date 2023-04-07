@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "pz/questions",
+    "title": "Questions",
+    "category": "text",
+    "description": "Progressively asks questions that refine our profile of a user.",
+    "version": "1",
+    "textdomain": "pz",
+    "editorScript": "file:./index.js",
+    "attributes": {
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "question": {
+                "type": "string",
+                "default": ""
+              },
+              "choices": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "default": ""
+                }
+              },
+              "answer": {
+                "type": "string",
+                "default": ""
+              }
+            },
+            "required": ["question", "choices", "answer"]
+          }
+        }
+      },
+    "style": "file:./index.css"
+}
