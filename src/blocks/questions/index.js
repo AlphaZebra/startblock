@@ -30,10 +30,19 @@ function EditComponent(props) {
 
     return (
         <div {...blockProps} className="pz-question-block">
+            <Button variant="primary" onClick={() => {props.setAttributes({questions: props.attributes.questions[0].choices.concat(["new"])})
+            }}>
+                Add another question
+            </Button>
             {props.attributes.questions.map((q, i) => {
                 return(
                     <>
+                
                 <TextControl   label="Question:" value={q} onChange={updateQuestion} style={{ fontSize: "20px" }} />
+                <Button variant="primary" >
+                    Add another answer
+                </Button>
+                
                 { props.attributes.choices.map((choice,index) => {
                     myChoices = choice.split(",")
 
@@ -43,14 +52,38 @@ function EditComponent(props) {
                         myChoices.map((x) => {
                             return( 
                             <>
-                                <TextControl value={x} />
+                                    <tr>
+                                        <td width="400px">
+                                        <TextControl value={x} />
+                                        <input type="hidden" value={index}/>
+                                    
+                                        </td>
+                                        <td>
+                                        <Button>
+                                            <Icon className="pz-star-empty" icon= "star-filled" />
+                                        </Button>
+                                        </td>
+                                        <td>
+                                        <Button>
+                                        <Icon icon= "table-row-delete" />
+                                        </Button>
+                                        </td>
+                               
+                                        </tr>
+                                         
+                                       
+                                    
+                               
                             </> 
                             )
                             
                         })
                         :""     // if not, don't display the answers for some other question
-                        )      
+                        
+                        )  
+                            
                     })}
+                    
                     </>
                 )
                 

@@ -249,7 +249,14 @@ function EditComponent(props) {
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({}, blockProps, {
     className: "pz-question-block"
-  }), props.attributes.questions.map((q, i) => {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+    variant: "primary",
+    onClick: () => {
+      props.setAttributes({
+        questions: props.attributes.questions[0].choices.concat(["new"])
+      });
+    }
+  }, "Add another question"), props.attributes.questions.map((q, i) => {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
       label: "Question:",
       value: q,
@@ -257,15 +264,27 @@ function EditComponent(props) {
       style: {
         fontSize: "20px"
       }
-    }), props.attributes.choices.map((choice, index) => {
+    }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, {
+      variant: "primary"
+    }, "Add another answer"), props.attributes.choices.map((choice, index) => {
       myChoices = choice.split(",");
       return index == i ?
       // is this the right set of answers for this question?
 
       myChoices.map(x => {
-        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
+        return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("tr", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("td", {
+          width: "400px"
+        }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
           value: x
-        }));
+        }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("input", {
+          type: "hidden",
+          value: index
+        })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("td", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+          className: "pz-star-empty",
+          icon: "star-filled"
+        }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("td", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Button, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+          icon: "table-row-delete"
+        })))));
       }) : "" // if not, don't display the answers for some other question
       ;
     }));
