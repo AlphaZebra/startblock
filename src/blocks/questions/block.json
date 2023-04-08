@@ -9,27 +9,18 @@
     "textdomain": "pz",
     "editorScript": "file:./index.js",
     "attributes": { 
-        "questions": {
-            "type": "array",
-            "default": [
-              "First question text",
-              "Second question text"
-            ]
-          },
-        "choices": {
-          "type": "array",
-          "default": [
-            "bologna, garlic, sage, carcass fat",
-            "starfish, whales, dolphins, sea horses"
-          ]
+        "question": {
+            "type": "string"
+        },
+        "slug": {
+            "type": "string"
         },
         "answers": {
-          "type": "array",
-          "default": [
-            "2", "1"
-          ]
-        }
-        
+            "type": "array", "default": [""]
+        },
+        "correctAnswer": {"type": "number", "default": "undefined"},
+        "shortName": {"type": "string", "default": "undefined"},
+        "priority": {"type": "string" }
      },
     "style": "file:./index.css"
 }
