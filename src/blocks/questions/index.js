@@ -13,9 +13,7 @@ registerBlockType(block.name, {
     
     icon: icons.primary,
     edit: EditComponent,
-    save: function () {
-        return null
-    }
+    save: SaveComponent
 })
 
 
@@ -105,3 +103,15 @@ function EditComponent(props) {
     )
 }
 
+function SaveComponent() {
+    //return null
+    return(
+        <div>
+             <h1>Here we go on the frontend! </h1>
+             <form>
+                <input type="text" value="Horses!" />
+             </form>
+        </div>
+       
+    )
+}

@@ -22,6 +22,10 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
  add_action('init', 'pz_register');
 
 
+ 
+
+
+
  class PZQuestions {
     function __construct() {
         global $wpdb;
@@ -33,6 +37,7 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
     
         add_action('admin_post_do-segment', array($this, 'do_segment'));
         add_action('admin_post_nopriv_do-segment', array($this, 'do_segment'));
+        //add_action( 'post_updated', array($this, 'pz_on_save'));
         
  
     }    
@@ -43,13 +48,18 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
     
         dbDelta("CREATE TABLE $this->question_tablename (
-            qnum int(3) unsigned NOT NULL DEFAULT 1,
-            qtext varchar(250) NOT NULL DEFAULT '',
-            qtype varchar(2) NOT NULL DEFAULT '',
-            PRIMARY KEY  (qnum)
+            personID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            qslug varchar(30) NOT NULL DEFAULT '',
+            qchoice varchar(60) NOT NULL DEFAULT '',
+            PRIMARY KEY  (personID)
         ) $this->charset;");
         
         } 
+
+        // function pz_on_save($postID, $post_before, $post_after) {
+        
+        // }
+    
 
     function do_segment () {
         global $wpdb;

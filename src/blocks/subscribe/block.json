@@ -13,6 +13,9 @@
         "content": {
             "type": "string"
         },
+        "nameContent": {
+            "type": "string"
+        },
         "underline_color": {
             "type": "string",
             "default": "#f87171"

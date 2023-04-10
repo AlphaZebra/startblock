@@ -203,9 +203,7 @@ __webpack_require__.r(__webpack_exports__);
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_4__.name, {
   icon: _icons__WEBPACK_IMPORTED_MODULE_5__["default"].primary,
   edit: EditComponent,
-  save: function () {
-    return null;
-  }
+  save: SaveComponent
 });
 function EditComponent(props) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)();
@@ -296,6 +294,13 @@ function EditComponent(props) {
       });
     }
   }, "Add another answer")));
+}
+function SaveComponent() {
+  //return null
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Here we go on the frontend! "), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "text",
+    value: "Horses!"
+  })));
 }
 })();
 

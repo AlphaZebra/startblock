@@ -10,8 +10,8 @@ function pz_register() {
 
     foreach($blocks as $block) {
         register_block_type(
-            PZ_PLUGIN_DIR . 'build/blocks/' . $block['name'],
-            array( 'render_callback' => 'theHTML')
+            PZ_PLUGIN_DIR . 'build/blocks/' . $block['name']
+            // array( 'render_callback' => 'theHTML')
             
         );
     }
