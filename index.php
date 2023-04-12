@@ -20,6 +20,7 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
  // Hooks
 
  add_action('init', 'pz_register');
+ add_action('init', 'pz_setcookie');
 
 
  class PZQuestions {
@@ -86,28 +87,50 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
         wp_redirect('/');
         exit;
     }
+
+   
+    
     
     function do_startblock () {
         global $wpdb;
         $created = date("m/j/Y");
-            
-            $item = [];
-            $item['personID'] = null;
-            $item['fname'] = sanitize_text_field($_POST['fname']);
-            $item['lname'] = sanitize_text_field($_POST['lname']);
-            $item['email'] = sanitize_text_field($_POST['email']);
-            $item['created']= $created;
-        
-            if( $wpdb->insert($this->startblock_tablename, $item ) <= 0 ) {  
-                var_dump( $wpdb );
-                exit;
 
-            }
+        $item = [];
+        $item['personID'] = null;
+        $item['fname'] = sanitize_text_field($_POST['fname']);
+        $item['lname'] = sanitize_text_field($_POST['lname']);
+        $item['email'] = sanitize_text_field($_POST['email']);
+        $item['created']= $created;
+    
+        if( $wpdb->insert($this->startblock_tablename, $item ) <= 0 ) {  
+            var_dump( $wpdb );
+            exit;
+        }
+
+        $pz_id = $wpdb->insert_id;  // this is the id number of the record we just inserted
+       
+        // setcookie('pz_num', $pz_id, time()+31556926);
         
-        wp_redirect('/');
+        wp_redirect('/?pznum=' . $pz_id);
         exit;
 
     }
 }
- 
+
+function pz_setcookie () {
+    if(isset($_GET['pznum'])) {
+        setcookie('pz_num', sanitize_text_field($_GET['pznum']), time()+31556926);
+    }
+}
+
+function basement() {
+
+    if(isset($_COOKIE['pz_num'])) {
+        $personID = $_COOKIE['pz_num'];
+        // read in the record associated with this id
+        $item = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $personID");
+    }
+}
+
+
     $pzQuestions = new PZQuestions();

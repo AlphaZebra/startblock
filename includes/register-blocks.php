@@ -5,7 +5,7 @@ function pz_register() {
     $blocks = [
         [ 'name' => 'subscribe' ],
         [ 'name' => 'search-form'],
-        [ 'name' => 'questions' ]
+        [ 'name' => 'question' ]
     ];
 
     foreach($blocks as $block) {

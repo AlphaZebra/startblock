@@ -1,8 +1,8 @@
 {
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 2,
-    "name": "pz/questions",
-    "title": "Questions",
+    "name": "pz/question",
+    "title": "Question",
     "category": "text",
     "description": "Progressively asks questions that refine our profile of a user.",
     "version": "1",
