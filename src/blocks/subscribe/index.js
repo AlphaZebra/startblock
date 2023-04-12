@@ -59,22 +59,23 @@ function SaveComponent ( {attributes} ) {
 
     const thisURL = window.location.href
     const url = new URL(thisURL)
-    const adminPath = url.hostname + '/wp-admin/admin-post.php'
-    
+    const adminPath = url.protocol + '//' + url.host + '/wp-admin/admin-post.php'
 
     return (
         
         
         <div>
         <form action={adminPath}  method="POST">
-                <input type="hidden" name="action" value="do-subscriber" required />
+                <input type="hidden" name="action" value="do-startblock" required />
                 
                 <p>{content}</p>
-                <input type="text" name="fname" placeholder="First name..."/>
-                <input type="text" name="lname" placeholder="Last name..."/>
+                <input type="email" name="email" placeholder="Email..." /> 
+               
             
                 <p>{nameContent}</p>
-               
+                <input type="text" name="fname" placeholder="First name..."/>
+                <input type="text" name="lname" placeholder="Last name..."/>
+
                 <button>Submit!</button>
             </form>
         </div>

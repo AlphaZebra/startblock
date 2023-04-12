@@ -199,16 +199,20 @@ function SaveComponent(_ref2) {
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save();
   const thisURL = window.location.href;
   const url = new URL(thisURL);
-  const adminPath = url.hostname + '/wp-admin/admin-post.php';
+  const adminPath = url.protocol + '//' + url.host + '/wp-admin/admin-post.php';
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     action: adminPath,
     method: "POST"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "hidden",
     name: "action",
-    value: "do-subscriber",
+    value: "do-startblock",
     required: true
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, content), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+    type: "email",
+    name: "email",
+    placeholder: "Email..."
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, nameContent), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     name: "fname",
     placeholder: "First name..."
@@ -216,7 +220,7 @@ function SaveComponent(_ref2) {
     type: "text",
     name: "lname",
     placeholder: "Last name..."
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, nameContent), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "Submit!")));
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "Submit!")));
 }
 })();
 
