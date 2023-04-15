@@ -103,15 +103,52 @@ function EditComponent(props) {
     )
 }
 
-function SaveComponent() {
-    //return null
+function SaveComponent({attributes}) {
+   
+    const thisURL = window.location.href
+    const url = new URL(thisURL)
+    const adminPath = url.protocol + '//' + url.host + '/wp-admin/admin-post.php'
+    
+   
     return(
         <div>
              <h1>Here we go on the frontend! </h1>
-             <form>
-                <input type="text" value="Horses!" />
+             
+             <form action={adminPath}  method="POST">
+                <input type="hidden" name="action" value="do-question-block" required />                
+                <input type="hidden" name="qslug" value={ attributes.slug } />
+
+                <p> {attributes.question} </p>
+
+                {attributes.answers.map(function(answer, index) {
+                    return(
+                        <div>
+                            <input type="radio" id={answer} name="qchoice" value={answer} />
+                            <label for={answer}>{answer}</label><br></br>
+                        </div>
+                    )
+
+                })}
+
+                <button>Submit!</button>
              </form>
         </div>
        
     )
 }
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }

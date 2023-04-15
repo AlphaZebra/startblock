@@ -34,10 +34,12 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
     
         add_action('activate_startblock/index.php', array($this, 'onActivate'));
     
-        add_action('admin_post_do-segment', array($this, 'do_segment'));
-        add_action('admin_post_nopriv_do-segment', array($this, 'do_segment'));
+        // add_action('admin_post_do-segment', array($this, 'do_segment'));
+        // add_action('admin_post_nopriv_do-segment', array($this, 'do_segment'));
         add_action('admin_post_do-startblock', array($this, 'do_startblock'));
         add_action('admin_post_nopriv_do-startblock', array($this, 'do_startblock'));
+        add_action('admin_post_do-question-block', array($this, 'do_question_block'));
+        add_action('admin_post_nopriv_do-question-block', array($this, 'do_question_block'));
         
  
     }    
@@ -48,10 +50,12 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php');
     
         dbDelta("CREATE TABLE $this->question_tablename (
+            responseID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
             personID bigint(20) unsigned NOT NULL DEFAULT 1,
             qslug varchar(30) NOT NULL DEFAULT '',
             qchoice varchar(60) NOT NULL DEFAULT '',
-            PRIMARY KEY  (personID)
+            created varchar(12) NOT NULL DEFAULT '',
+            PRIMARY KEY  (responseID)
         ) $this->charset;");
         
         dbDelta("CREATE TABLE $this->startblock_tablename (
@@ -89,7 +93,34 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
     }
 
    
-    
+    function do_question_block () {
+        global $wpdb;
+        $created = date("m/j/Y");
+        $personID = 1;
+
+        // Check if cookie is already set
+        if(isset($_COOKIE['pz_num'])) {
+            $personID = $_COOKIE['pz_num'];
+
+        }
+ 
+
+           
+        $item = [];
+        $item['personID'] = $personID; // already sanitized above
+        $item['qslug'] = sanitize_text_field($_POST['qslug']);
+        $item['qchoice'] = sanitize_text_field($_POST['qchoice']);
+        $item['created']= $created;
+        
+        if( $wpdb->insert($this->question_tablename, $item ) <= 0 ) {  
+            var_dump( $wpdb );
+            exit;
+
+        }
+        
+        wp_redirect('/');
+        exit;
+    }
     
     function do_startblock () {
         global $wpdb;
