@@ -3,6 +3,14 @@
     border-radius: 2px;
     border: 1px solid #d6d6d6;
     background-color: #f1f1f1;
+    width: 500px;
+
+
+    .pz-question-text {
+        font-size: 18px;
+        font-weight: 700;
+        color:magenta;
+    }
 
     .pz-star-empty {
         color: #ffd700;
@@ -25,3 +33,4 @@
         }
     }
 }
+

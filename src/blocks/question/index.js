@@ -108,17 +108,35 @@ function SaveComponent({attributes}) {
     const thisURL = window.location.href
     const url = new URL(thisURL)
     const adminPath = url.protocol + '//' + url.host + '/wp-admin/admin-post.php'
-    
+    const testColor = "#ff0000;\n"
+    var jollyString = `
+    .pz-question-button {
+       border:none;
+       padding:15px;
+       background-color:#3F51B5;
+       color:` + testColor + `
+       font-weight:600;
+       border-radius:5px;
+       width:100%;
+
+   }
+`
    
     return(
-        <div>
-             <h1>Here we go on the frontend! </h1>
-             
+        <div className="pz-question-block">
+
+           
+
+            <style>
+                {jollyString}
+            </style>
+
+                        
              <form action={adminPath}  method="POST">
                 <input type="hidden" name="action" value="do-question-block" required />                
                 <input type="hidden" name="qslug" value={ attributes.slug } />
 
-                <p> {attributes.question} </p>
+                <p className="pz-question-text"> {attributes.question} </p>
 
                 {attributes.answers.map(function(answer, index) {
                     return(
@@ -130,7 +148,7 @@ function SaveComponent({attributes}) {
 
                 })}
 
-                <button>Submit!</button>
+                <button className="pz-question-button">Submit!</button>
              </form>
         </div>
        

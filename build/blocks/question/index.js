@@ -302,7 +302,22 @@ function SaveComponent(_ref) {
   const thisURL = window.location.href;
   const url = new URL(thisURL);
   const adminPath = url.protocol + '//' + url.host + '/wp-admin/admin-post.php';
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h1", null, "Here we go on the frontend! "), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
+  const testColor = "#ff0000;\n";
+  var jollyString = `
+    .pz-question-button {
+       border:none;
+       padding:15px;
+       background-color:#3F51B5;
+       color:` + testColor + `
+       font-weight:600;
+       border-radius:5px;
+       width:100%;
+
+   }
+`;
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "pz-question-block"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("style", null, jollyString), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     action: adminPath,
     method: "POST"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
@@ -314,7 +329,9 @@ function SaveComponent(_ref) {
     type: "hidden",
     name: "qslug",
     value: attributes.slug
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, " ", attributes.question, " "), attributes.answers.map(function (answer, index) {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "pz-question-text"
+  }, " ", attributes.question, " "), attributes.answers.map(function (answer, index) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
       type: "radio",
       id: answer,
@@ -323,7 +340,9 @@ function SaveComponent(_ref) {
     }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
       for: answer
     }, answer), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null));
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", null, "Submit!")));
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    className: "pz-question-button"
+  }, "Submit!")));
 }
 function getCookie(cname) {
   let name = cname + "=";

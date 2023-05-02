@@ -4,15 +4,19 @@ function pz_register() {
 
     $blocks = [
         [ 'name' => 'subscribe' ],
-        [ 'name' => 'search-form'],
+        [ 'name' => 'shortblock'],
         [ 'name' => 'question' ]
     ];
 
     foreach($blocks as $block) {
+        if( $block['name'] == 'shortblock') {
+            $render_prop = array( 'render_callback' => 'theBlockContent');
+        } else {
+            $render_prop = array([]);
+        }
         register_block_type(
-            PZ_PLUGIN_DIR . 'build/blocks/' . $block['name']
-            // array( 'render_callback' => 'theHTML')
-            
+            PZ_PLUGIN_DIR . 'build/blocks/' . $block['name'],
+            $render_prop
         );
     }
 
@@ -21,6 +25,12 @@ function pz_register() {
 }
 
 
+function theBlockContent($attributes) {
+    $my_content = '<p>' . $attributes['content'] . '</p>';
+    // $my_content = $attributes['content'];
+    $my_content = do_shortcode( $my_content );
+    return $my_content;
+}
 
 
 function theHTML($attributes) {

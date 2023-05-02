@@ -48,7 +48,7 @@ module.exports = window["wp"]["element"];
   \*****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/subscribe","title":"Subscribe","category":"text","icon":"star-filled","description":"Block for initial request for email.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"},"nameContent":{"type":"string"},"underline_color":{"type":"string","default":"#f87171"}}}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/subscribe","title":"Subscribe","category":"text","icon":"star-filled","description":"Block for initial request for email.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"},"nameContent":{"type":"string"},"underline_color":{"type":"string","default":"#f87171"}},"style":"file:./index.css"}');
 
 /***/ })
 
@@ -160,11 +160,11 @@ function EditComponent(_ref) {
     title: "Colors"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
     colors: [{
-      name: 'Red',
-      color: '#f87171'
+      name: "Red",
+      color: "#f87171"
     }, {
-      name: 'Indigo',
-      color: '#818cf8'
+      name: "Indigo",
+      color: "#818cf8"
     }],
     value: underline_color,
     onChange: newVal => setAttributes({
@@ -199,7 +199,7 @@ function SaveComponent(_ref2) {
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save();
   const thisURL = window.location.href;
   const url = new URL(thisURL);
-  const adminPath = url.protocol + '//' + url.host + '/wp-admin/admin-post.php';
+  const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     action: adminPath,
     method: "POST"

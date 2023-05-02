@@ -17,11 +17,20 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
  include( PZ_PLUGIN_DIR . 'includes/register-blocks.php');
 
+
  // Hooks
 
  add_action('init', 'pz_register');
  add_action('init', 'pz_setcookie');
+//  add_action('wp_enqueue_scripts', 'pz_setstyle');
 
+ // If already set, read cookie 
+ // set global variable for personID
+ $pz_personID = 7;
+
+ function pz_setstyle() {
+    wp_enqueue_style( 'pz_style', PZ_PLUGIN_DIR . 'build/blocks/subscribe/index.css');
+ }
 
  class PZQuestions {
     function __construct() {
@@ -40,6 +49,8 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
         add_action('admin_post_nopriv_do-startblock', array($this, 'do_startblock'));
         add_action('admin_post_do-question-block', array($this, 'do_question_block'));
         add_action('admin_post_nopriv_do-question-block', array($this, 'do_question_block'));
+
+        add_shortcode( 'pz_startdata', array($this, 'do_pz_shortcode') );
         
  
     }    
@@ -70,28 +81,33 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
        
     } 
 
-    
-
-    function do_segment () {
+    function do_pz_shortcode ($atts) {
         global $wpdb;
-        
-       
-            
-        $item = [];
-        $item['personID'] = 1;
-        $item['qslug'] = sanitize_text_field($_POST['qslug']);
-        $item['qchoice'] = 'A';
-        
-        if( $wpdb->insert($this->question_tablename, $item ) <= 0 ) {  
-            var_dump( $wpdb );
-            exit;
+        global $pz_personID;
 
+        // if looking for name or email, read record from startblock table
+        if( $atts['slug'] == 'fname' ) {
+            $entries = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $pz_personID");
+            
+            return $entries[0]->fname;
+        }
+
+        // else, read any answer settings we have for the current user
+        $entries = $wpdb->get_results("SELECT * FROM $this->question_tablename WHERE personID = $pz_personID");
+
+        ob_start();
+
+        foreach($entries as $entry) {
+            if( $atts['slug'] == $entry->qslug) {
+                echo $entry->qchoice;
+            }
         }
         
-        wp_redirect('/');
-        exit;
+        return ob_get_clean();
+       
     }
 
+   
    
     function do_question_block () {
         global $wpdb;
