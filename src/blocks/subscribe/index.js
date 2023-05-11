@@ -11,8 +11,11 @@ import {
   ColorPalette,
 } from "@wordpress/components";
 import block from "./block.json";
+import "./index.scss";
+import icons from "../../icons";
 
 registerBlockType(block.name, {
+  icon: icons.primary,
   edit: EditComponent,
   save: SaveComponent,
 });
@@ -70,7 +73,7 @@ function SaveComponent({ attributes }) {
   const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
 
   return (
-    <div>
+    <div className="pz-form-div">
       <form action={adminPath} method="POST">
         <input type="hidden" name="action" value="do-startblock" required />
 
@@ -80,8 +83,8 @@ function SaveComponent({ attributes }) {
         <p>{nameContent}</p>
         <input type="text" name="fname" placeholder="First name..." />
         <input type="text" name="lname" placeholder="Last name..." />
-
-        <button>Submit!</button>
+        <p />
+        <button variant="primary">Submit!</button>
       </form>
     </div>
   );

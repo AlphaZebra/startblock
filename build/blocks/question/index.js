@@ -16,6 +16,33 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //   primary: (
+  //     <svg
+  //       viewBox="0 0 100 100"
+  //       xmlns="http://www.w3.org/2000/svg"
+  //       version="1.1"
+  //       fill="#000000"
+  //       stroke="#000000"
+  //     >
+  //       <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+  //       <g
+  //         id="SVGRepo_tracerCarrier"
+  //         stroke-linecap="round"
+  //         stroke-linejoin="round"
+  //       ></g>
+  //       <g id="SVGRepo_iconCarrier">
+  //         {" "}
+  //         <path
+  //           style="fill:#bcd576;"
+  //           d="M 45,90 45,50 4,32 16,28 16,24 c 0,0 3,-7 20,-2 l 6,-3 0,-4 c 0,0 7,-6 21,0 l 0,4 8,4 c 0,0 15,-2 14,5 l 11,5 0,39 z"
+  //         ></path>{" "}
+  //         <path
+  //           style="fill:#0693e3;"
+  //           d="m 58,34 0,8 c 0,0 -10,6 -21,0 l 0,-8 c 0,0 13,6 21,0 z m 6,-8 0,8 c 0,0 8,7 21,0 l 0,-8 c 0,0 -10,6 -21,0 z m -22,-10 0,8 c 0,0 11,7 21,-1 l 0,-7 c 0,0 -11,6 -21,0 z m -26,8 0,8 c 0,0 11,7 21,-1 l 0,-7 c 0,0 -11,6 -21,0 z M 4,32 4,71 45,90 45,50 z"
+  //         ></path>{" "}
+  //       </g>
+  //     </svg>
+  //   ),
   primary: (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("svg", {
     width: "68px",
     height: "68px",

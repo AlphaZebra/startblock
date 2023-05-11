@@ -4,7 +4,6 @@
   "name": "pz/subscribe",
   "title": "Subscribe",
   "category": "text",
-  "icon": "star-filled",
   "description": "Block for initial request for email.",
   "version": "1",
   "textdomain": "pz",

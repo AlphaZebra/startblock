@@ -81,6 +81,9 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
        
     } 
 
+    
+    
+
     function do_pz_shortcode ($atts) {
         global $wpdb;
         global $pz_personID;
@@ -90,6 +93,16 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
             $entries = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $pz_personID");
             
             return $entries[0]->fname;
+        }
+        if( $atts['slug'] == 'lname' ) {
+            $entries = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $pz_personID");
+            
+            return $entries[0]->lname;
+        }
+        if( $atts['slug'] == 'email' ) {
+            $entries = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $pz_personID");
+            
+            return $entries[0]->email;
         }
 
         // else, read any answer settings we have for the current user
@@ -177,6 +190,89 @@ function basement() {
         // read in the record associated with this id
         $item = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $personID");
     }
+}
+
+add_action("init", "download_csv");
+
+function download_csv() {
+
+    // XXX add admin only
+
+  if (isset($_POST['download_csv'])) {
+  
+    global $wpdb;
+
+    $sql = "SELECT * FROM {$wpdb->prefix}pz_startblock";
+
+    $rows = $wpdb->get_results($sql, 'ARRAY_A');
+    
+    if ($rows) {
+
+        $csv_fields = array();
+        $csv_fields[] = "First";
+        $csv_fields[] = 'Last';
+        $csv_fields[] = 'Email';
+
+        $output_filename = 'file_name' .'.csv';
+        $output_handle = @fopen('php://output', 'w');
+
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Content-Description: File Transfer');
+        header('Content-type: text/csv');
+        header('Content-Disposition: attachment; filename=' . 
+        $output_filename);
+        header('Expires: 0');
+        header('Pragma: public');
+
+        $first = true;
+       // Parse results to csv format
+        foreach ($rows as $row) {
+
+       // Add table headers
+            if ($first) {
+
+               $titles = array();
+
+                foreach ($row as $key => $val) {
+
+                    $titles[] = $key;
+
+                }
+
+                fputcsv($output_handle, $titles);
+
+                $first = false;
+            }
+
+            $leadArray = (array) $row; // Cast the Object to an array
+            // Add row to file
+            fputcsv($output_handle, $leadArray);
+        }
+
+        //echo '<a href="'.$output_handle.'">test</a>';
+
+        // Close output file stream
+        fclose($output_handle);
+
+        die();
+    }
+  }
+}
+
+add_action("init", "drop_start_table");
+
+function drop_start_table() {
+
+    // XXX add admin only
+
+  if (isset($_POST['unload'])) {
+  
+    global $wpdb;
+    $table_name = $wpdb->prefix . "pz_startblock";
+    $sql = "TRUNCATE TABLE $table_name";
+    $wpdb->query($sql);
+
+  }
 }
 
 
