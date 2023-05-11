@@ -9,10 +9,12 @@ import {
   Button,
   PanelBody,
   ColorPalette,
+  ToggleControl,
 } from "@wordpress/components";
 import block from "./block.json";
 import "./index.scss";
 import icons from "../../icons";
+import { useState } from "@wordpress/element";
 
 registerBlockType(block.name, {
   icon: icons.primary,
@@ -21,20 +23,37 @@ registerBlockType(block.name, {
 });
 
 function EditComponent({ attributes, setAttributes }) {
-  const { content, nameContent, underline_color } = attributes;
+  const { content, nameContent, background_color, border_color, text_color } =
+    attributes;
+  const [showNameFields, setShowNameFields] = useState(true);
   const blockProps = useBlockProps();
 
   return (
-    <div>
+    <div {...blockProps}>
       <InspectorControls>
+        <ToggleControl
+          label="Show name fields?"
+          help={showNameFields ? "Show name fields." : "Hide name fields."}
+          checked={showNameFields}
+          onChange={() => {
+            setShowNameFields((state) => !state);
+          }}
+        />
         <PanelBody title="Colors">
+          <p>Background color</p>
           <ColorPalette
-            colors={[
-              { name: "Red", color: "#f87171" },
-              { name: "Indigo", color: "#818cf8" },
-            ]}
-            value={underline_color}
-            onChange={(newVal) => setAttributes({ underline_color: newVal })}
+            value={background_color}
+            onChange={(newVal) => setAttributes({ background_color: newVal })}
+          />
+          <p>Border color</p>
+          <ColorPalette
+            value={border_color}
+            onChange={(newVal) => setAttributes({ border_color: newVal })}
+          />
+          <p>Text color</p>
+          <ColorPalette
+            value={text_color}
+            onChange={(newVal) => setAttributes({ text_color: newVal })}
           />
         </PanelBody>
       </InspectorControls>
@@ -65,22 +84,30 @@ function EditComponent({ attributes, setAttributes }) {
 }
 
 function SaveComponent({ attributes }) {
-  const { content, nameContent } = attributes;
+  const { content, nameContent, background_color, border_color, text_color } =
+    attributes;
   const blockProps = useBlockProps.save();
 
   const thisURL = window.location.href;
   const url = new URL(thisURL);
   const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
+  const pz_bg =
+    "border-width: 2px; background-color: " +
+    background_color +
+    "; border-color: " +
+    border_color +
+    "; color: " +
+    text_color;
 
   return (
-    <div className="pz-form-div">
+    <div className="pz-form-div" style={pz_bg}>
       <form action={adminPath} method="POST">
         <input type="hidden" name="action" value="do-startblock" required />
 
-        <p>{content}</p>
+        <p className="pz-startblock-text">{content}</p>
         <input type="email" name="email" placeholder="Email..." />
 
-        <p>{nameContent}</p>
+        <p className="pz-startblock-text">{nameContent}</p>
         <input type="text" name="fname" placeholder="First name..." />
         <input type="text" name="lname" placeholder="Last name..." />
         <p />

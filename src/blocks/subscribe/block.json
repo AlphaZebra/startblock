@@ -15,9 +15,17 @@
     "nameContent": {
       "type": "string"
     },
-    "underline_color": {
+    "background_color": {
       "type": "string",
       "default": "#f87171"
+    },
+    "border_color": {
+      "type": "string",
+      "default": "#f87100"
+    },
+    "text_color": {
+      "type": "string",
+      "default": "#000000"
     }
   },
   "style": "file:./index.css"

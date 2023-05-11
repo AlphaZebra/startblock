@@ -129,7 +129,7 @@ module.exports = window["wp"]["element"];
   \*****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/subscribe","title":"Subscribe","category":"text","description":"Block for initial request for email.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"},"nameContent":{"type":"string"},"underline_color":{"type":"string","default":"#f87171"}},"style":"file:./index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/subscribe","title":"Subscribe","category":"text","description":"Block for initial request for email.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"},"nameContent":{"type":"string"},"background_color":{"type":"string","default":"#f87171"},"border_color":{"type":"string","default":"#f87100"},"text_color":{"type":"string","default":"#000000"}},"style":"file:./index.css"}');
 
 /***/ })
 
@@ -226,6 +226,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 (0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__.registerBlockType)(_block_json__WEBPACK_IMPORTED_MODULE_4__.name, {
   icon: _icons__WEBPACK_IMPORTED_MODULE_6__["default"].primary,
   edit: EditComponent,
@@ -239,22 +240,35 @@ function EditComponent(_ref) {
   const {
     content,
     nameContent,
-    underline_color
+    background_color,
+    border_color,
+    text_color
   } = attributes;
+  const [showNameFields, setShowNameFields] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ToggleControl, {
+    label: "Show name fields?",
+    help: showNameFields ? "Show name fields." : "Hide name fields.",
+    checked: showNameFields,
+    onChange: () => {
+      setShowNameFields(state => !state);
+    }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.PanelBody, {
     title: "Colors"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
-    colors: [{
-      name: "Red",
-      color: "#f87171"
-    }, {
-      name: "Indigo",
-      color: "#818cf8"
-    }],
-    value: underline_color,
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Background color"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+    value: background_color,
     onChange: newVal => setAttributes({
-      underline_color: newVal
+      background_color: newVal
+    })
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Border color"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+    value: border_color,
+    onChange: newVal => setAttributes({
+      border_color: newVal
+    })
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Text color"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.ColorPalette, {
+    value: text_color,
+    onChange: newVal => setAttributes({
+      text_color: newVal
     })
   }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "This block creates a form that is displayed to the user to ask for their email and name. You determine the background and border colors, along with any border radius."), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.TextControl, {
     label: "Enter the text you'd like to use to prompt users for their email address...",
@@ -280,14 +294,19 @@ function SaveComponent(_ref2) {
   } = _ref2;
   const {
     content,
-    nameContent
+    nameContent,
+    background_color,
+    border_color,
+    text_color
   } = attributes;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps.save();
   const thisURL = window.location.href;
   const url = new URL(thisURL);
   const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
+  const pz_bg = "border-width: 2px; background-color: " + background_color + "; border-color: " + border_color + "; color: " + text_color;
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "pz-form-div"
+    className: "pz-form-div",
+    style: pz_bg
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("form", {
     action: adminPath,
     method: "POST"
@@ -296,11 +315,15 @@ function SaveComponent(_ref2) {
     name: "action",
     value: "do-startblock",
     required: true
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, content), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "pz-startblock-text"
+  }, content), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "email",
     name: "email",
     placeholder: "Email..."
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, nameContent), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
+    className: "pz-startblock-text"
+  }, nameContent), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
     type: "text",
     name: "fname",
     placeholder: "First name..."

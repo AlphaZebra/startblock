@@ -4,20 +4,25 @@
 input[type=text] {
   width: 90%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin-left: 5%;
   box-sizing: border-box;
 }
 
 input[type=email] {
   width: 90%;
   padding: 12px 20px;
-  margin: 8px 0;
+  margin-left: 5%;
   box-sizing: border-box;
 }
 
 button {
   padding: 8px;
   border-radius: 2px;
+  margin: 5%;
+}
+
+.pz-startblock-text {
+  margin-left: 5%;
 }
 
 /*# sourceMappingURL=index.css.map*/
