@@ -23,9 +23,15 @@ registerBlockType(block.name, {
 });
 
 function EditComponent({ attributes, setAttributes }) {
-  const { content, nameContent, background_color, border_color, text_color } =
-    attributes;
-  const [showNameFields, setShowNameFields] = useState(true);
+  const {
+    content,
+    nameContent,
+    titleContent,
+    background_color,
+    border_color,
+    text_color,
+    show_name,
+  } = attributes;
   const blockProps = useBlockProps();
 
   return (
@@ -33,10 +39,10 @@ function EditComponent({ attributes, setAttributes }) {
       <InspectorControls>
         <ToggleControl
           label="Show name fields?"
-          help={showNameFields ? "Show name fields." : "Hide name fields."}
-          checked={showNameFields}
-          onChange={() => {
-            setShowNameFields((state) => !state);
+          value={show_name}
+          checked={show_name}
+          onChange={(v) => {
+            setAttributes({ show_name: v });
           }}
         />
         <PanelBody title="Colors">
@@ -64,6 +70,13 @@ function EditComponent({ attributes, setAttributes }) {
           along with any border radius.
         </p>
         <TextControl
+          label="Enter title text for the block..."
+          placeholder="Box title:"
+          value={titleContent}
+          onChange={(newVal) => setAttributes({ titleContent: newVal })}
+        />
+
+        <TextControl
           label="Enter the text you'd like to use to prompt users for their email address..."
           placeholder="Prompt for email:"
           value={content}
@@ -84,8 +97,15 @@ function EditComponent({ attributes, setAttributes }) {
 }
 
 function SaveComponent({ attributes }) {
-  const { content, nameContent, background_color, border_color, text_color } =
-    attributes;
+  const {
+    content,
+    nameContent,
+    titleContent,
+    background_color,
+    border_color,
+    text_color,
+    show_name,
+  } = attributes;
   const blockProps = useBlockProps.save();
 
   const thisURL = window.location.href;
@@ -99,19 +119,36 @@ function SaveComponent({ attributes }) {
     "; color: " +
     text_color;
 
+  var display_tag = "";
+  if (show_name == true) {
+    display_tag = "display: block";
+  } else display_tag = "display: none";
+
   return (
     <div className="pz-form-div" style={pz_bg}>
       <form action={adminPath} method="POST">
-        <input type="hidden" name="action" value="do-startblock" required />
+        <input
+          type="hidden"
+          className="pz-input"
+          name="action"
+          value="do-startblock"
+          required
+        />
+
+        <h4 className="pz-startblock-h4">{titleContent}</h4>
 
         <p className="pz-startblock-text">{content}</p>
         <input type="email" name="email" placeholder="Email..." />
 
-        <p className="pz-startblock-text">{nameContent}</p>
-        <input type="text" name="fname" placeholder="First name..." />
-        <input type="text" name="lname" placeholder="Last name..." />
+        <div style={display_tag}>
+          <p className="pz-startblock-text">{nameContent}</p>
+          <input type="text" name="fname" placeholder="First name..." />
+          <input type="text" name="lname" placeholder="Last name..." />
+        </div>
         <p />
-        <button variant="primary">Submit!</button>
+        <button className="pz-startblock-button" variant="primary">
+          Submit!
+        </button>
       </form>
     </div>
   );

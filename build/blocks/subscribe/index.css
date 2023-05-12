@@ -21,6 +21,11 @@ button {
   margin: 5%;
 }
 
+h4 {
+  padding: 0px;
+  margin-left: 5%;
+}
+
 .pz-startblock-text {
   margin-left: 5%;
 }

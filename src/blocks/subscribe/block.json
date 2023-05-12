@@ -15,6 +15,9 @@
     "nameContent": {
       "type": "string"
     },
+    "titleContent": {
+      "type": "string"
+    },
     "background_color": {
       "type": "string",
       "default": "#f87171"
@@ -26,6 +29,10 @@
     "text_color": {
       "type": "string",
       "default": "#000000"
+    },
+    "show_name": {
+      "type": "boolean",
+      "default": "true"
     }
   },
   "style": "file:./index.css"
