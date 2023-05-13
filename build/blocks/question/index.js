@@ -129,7 +129,7 @@ module.exports = window["wp"]["element"];
   \****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/question","title":"Question","category":"text","description":"Progressively asks questions that refine our profile of a user.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"question":{"type":"string"},"slug":{"type":"string"},"answers":{"type":"array","default":[""]},"textColor":{"type":"string"},"correctAnswer":{"type":"number","default":"undefined"},"shortName":{"type":"string","default":"undefined"},"priority":{"type":"string"}},"style":"file:./index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/question","title":"Question","category":"text","description":"Progressively asks questions that refine our profile of a user.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"question":{"type":"string"},"slug":{"type":"string"},"answers":{"type":"array","default":[""]},"textColor":{"type":"string"},"buttonTextColor":{"type":"string","default":"#000000"},"buttonBackgroundColor":{"type":"string","default":"#FFFFFF"},"blockBackgroundColor":{"type":"string","default":"#FFFFFF"},"correctAnswer":{"type":"number","default":"undefined"},"shortName":{"type":"string","default":"undefined"},"priority":{"type":"string"}},"style":"file:./index.css"}');
 
 /***/ })
 
@@ -259,6 +259,21 @@ function EditComponent(props) {
       textColor: newVal
     });
   }
+  function updateButtonTextColor(newVal) {
+    props.setAttributes({
+      buttonTextColor: newVal
+    });
+  }
+  function updateButtonBackgroundColor(newVal) {
+    props.setAttributes({
+      buttonBackgroundColor: newVal
+    });
+  }
+  function updateBlockBackgroundColor(newVal) {
+    props.setAttributes({
+      blockBackgroundColor: newVal
+    });
+  }
   function deleteAnswer(x) {
     const newAnswers = props.attributes.answers.filter(function (z, index) {
       return index != x;
@@ -279,10 +294,19 @@ function EditComponent(props) {
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
     title: "Settings"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPicker, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Question and answer text:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPicker, {
     color: props.attributes.textColor,
     onChange: updateTextColor
-  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Button text:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPicker, {
+    color: props.attributes.buttonTextColor,
+    onChange: updateButtonTextColor
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Button background:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPicker, {
+    color: props.attributes.buttonBackgroundColor,
+    onChange: updateButtonBackgroundColor
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Block background:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPicker, {
+    color: props.attributes.blockBackgroundColor,
+    onChange: updateBlockBackgroundColor
+  })), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "pz-question-block"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: "Question:",
@@ -335,12 +359,15 @@ function SaveComponent(_ref) {
   const url = new URL(thisURL);
   const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
   var jollyString = `
+    .pz-question-block {
+        background-color:` + attributes.blockBackgroundColor + `;
+    }
     .pz-question-button {
         margin-top: 20px;
        border:none;
        padding:15px;
-       background-color:#3F51B5;
-       color:` + attributes.textColor + `
+       background-color:` + attributes.buttonBackgroundColor + `; 
+       color:` + attributes.buttonTextColor + `;
        font-weight:600;
        border-radius:5px;
        width:100%;

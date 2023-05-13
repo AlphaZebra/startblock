@@ -22,6 +22,18 @@
     "textColor": {
       "type": "string"
     },
+    "buttonTextColor": {
+      "type": "string",
+      "default": "#000000"
+    },
+    "buttonBackgroundColor": {
+      "type": "string",
+      "default": "#FFFFFF"
+    },
+    "blockBackgroundColor": {
+      "type": "string",
+      "default": "#FFFFFF"
+    },
     "correctAnswer": { "type": "number", "default": "undefined" },
     "shortName": { "type": "string", "default": "undefined" },
     "priority": { "type": "string" }

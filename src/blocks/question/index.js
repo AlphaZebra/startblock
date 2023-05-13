@@ -43,6 +43,18 @@ function EditComponent(props) {
     props.setAttributes({ textColor: newVal });
   }
 
+  function updateButtonTextColor(newVal) {
+    props.setAttributes({ buttonTextColor: newVal });
+  }
+
+  function updateButtonBackgroundColor(newVal) {
+    props.setAttributes({ buttonBackgroundColor: newVal });
+  }
+
+  function updateBlockBackgroundColor(newVal) {
+    props.setAttributes({ blockBackgroundColor: newVal });
+  }
+
   function deleteAnswer(x) {
     const newAnswers = props.attributes.answers.filter(function (z, index) {
       return index != x;
@@ -62,11 +74,27 @@ function EditComponent(props) {
     <div {...blockProps}>
       <InspectorControls>
         <PanelBody title="Settings">
+          <p>Question and answer text:</p>
           <ColorPicker
             color={props.attributes.textColor}
             onChange={updateTextColor}
           />
+          <p>Button text:</p>
+          <ColorPicker
+            color={props.attributes.buttonTextColor}
+            onChange={updateButtonTextColor}
+          />
         </PanelBody>
+        <p>Button background:</p>
+        <ColorPicker
+          color={props.attributes.buttonBackgroundColor}
+          onChange={updateButtonBackgroundColor}
+        />
+        <p>Block background:</p>
+        <ColorPicker
+          color={props.attributes.blockBackgroundColor}
+          onChange={updateBlockBackgroundColor}
+        />
       </InspectorControls>
 
       <div className="pz-question-block">
@@ -130,14 +158,21 @@ function SaveComponent({ attributes }) {
   const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
   var jollyString =
     `
+    .pz-question-block {
+        background-color:` +
+    attributes.blockBackgroundColor +
+    `;
+    }
     .pz-question-button {
         margin-top: 20px;
        border:none;
        padding:15px;
-       background-color:#3F51B5;
+       background-color:` +
+    attributes.buttonBackgroundColor +
+    `; 
        color:` +
-    attributes.textColor +
-    `
+    attributes.buttonTextColor +
+    `;
        font-weight:600;
        border-radius:5px;
        width:100%;
