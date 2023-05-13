@@ -129,7 +129,7 @@ module.exports = window["wp"]["element"];
   \****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/question","title":"Question","category":"text","description":"Progressively asks questions that refine our profile of a user.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"question":{"type":"string"},"slug":{"type":"string"},"answers":{"type":"array","default":[""]},"correctAnswer":{"type":"number","default":"undefined"},"shortName":{"type":"string","default":"undefined"},"priority":{"type":"string"}},"style":"file:./index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/question","title":"Question","category":"text","description":"Progressively asks questions that refine our profile of a user.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"question":{"type":"string"},"slug":{"type":"string"},"answers":{"type":"array","default":[""]},"textColor":{"type":"string"},"correctAnswer":{"type":"number","default":"undefined"},"shortName":{"type":"string","default":"undefined"},"priority":{"type":"string"}},"style":"file:./index.css"}');
 
 /***/ })
 
@@ -234,6 +234,13 @@ __webpack_require__.r(__webpack_exports__);
 });
 function EditComponent(props) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)();
+  const {
+    attributes,
+    setAttributes
+  } = props;
+  const {
+    textColor
+  } = attributes;
   var myCheck = true;
   const [hasFixedBackground, setHasFixedBackground] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const curQuestion = props.attributes.question;
@@ -245,6 +252,11 @@ function EditComponent(props) {
   function updateSlug(newVal) {
     props.setAttributes({
       slug: newVal
+    });
+  }
+  function updateTextColor(newVal) {
+    props.setAttributes({
+      textColor: newVal
     });
   }
   function deleteAnswer(x) {
@@ -266,20 +278,13 @@ function EditComponent(props) {
     });
   }
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.PanelBody, {
-    title: "Screw you!"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-    label: "Question short name:"
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-    label: "Priority"
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPalette, null))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    title: "Settings"
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ColorPicker, {
+    color: props.attributes.textColor,
+    onChange: updateTextColor
+  }))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "pz-question-block"
-  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.ToggleControl, {
-    label: "Fixed Background",
-    checked: hasFixedBackground,
-    onChange: () => {
-      setHasFixedBackground(state => !state);
-    }
-  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+  }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
     label: "Question:",
     value: props.attributes.question,
     onChange: updateQuestion,
@@ -328,18 +333,24 @@ function SaveComponent(_ref) {
   } = _ref;
   const thisURL = window.location.href;
   const url = new URL(thisURL);
-  const adminPath = url.protocol + '//' + url.host + '/wp-admin/admin-post.php';
-  const testColor = "#ff0000;\n";
+  const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
   var jollyString = `
     .pz-question-button {
+        margin-top: 20px;
        border:none;
        padding:15px;
        background-color:#3F51B5;
-       color:` + testColor + `
+       color:` + attributes.textColor + `
        font-weight:600;
        border-radius:5px;
        width:100%;
 
+   }
+   .pz-question-text {
+    color:` + attributes.textColor + `
+   }
+   .pz-answer-text {
+    color:` + attributes.textColor + `
    }
 `;
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -358,13 +369,14 @@ function SaveComponent(_ref) {
     value: attributes.slug
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", {
     className: "pz-question-text"
-  }, " ", attributes.question, " "), attributes.answers.map(function (answer, index) {
+  }, attributes.question), attributes.answers.map(function (answer, index) {
     return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("input", {
       type: "radio",
       id: answer,
       name: "qchoice",
       value: answer
     }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("label", {
+      className: "pz-answer-text",
       for: answer
     }, answer), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("br", null));
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
@@ -374,10 +386,10 @@ function SaveComponent(_ref) {
 function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
+  let ca = decodedCookie.split(";");
   for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) == ' ') {
+    while (c.charAt(0) == " ") {
       c = c.substring(1);
     }
     if (c.indexOf(name) == 0) {

@@ -21,6 +21,9 @@
         ""
       ]
     },
+    "textColor": {
+      "type": "string"
+    },
     "correctAnswer": {
       "type": "number",
       "default": "undefined"
