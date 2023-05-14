@@ -1,17 +1,20 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 2,
-    "name": "pz/search-formshortblock",
-    "title": "ShortBlock",
-    "category": "text",
-    "description": "A text block that processes any shortcodes embedded in the text.",
-    "version": "1",
-    "textdomain": "pz",
-    "editorScript": "file:./index.js",
-    "attributes": { 
-        "content": {
-            "type": "string"
-        }
-     },
-    "style": "file:./index.css"
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "pz/search-formshortblock",
+  "title": "ShortBlock",
+  "category": "text",
+  "description": "A text block that processes any shortcodes embedded in the text.",
+  "version": "1",
+  "textdomain": "pz",
+  "editorScript": "file:./index.js",
+  "attributes": {
+    "content": {
+      "type": "string"
+    },
+    "altContent": {
+      "type": "string"
+    }
+  },
+  "style": "file:./index.css"
 }

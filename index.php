@@ -26,7 +26,10 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
  // If already set, read cookie 
  // set global variable for personID
- $pz_personID = 7;
+ if(isset($_COOKIE['pz_num'])) {
+    $pz_personID = $_COOKIE['pz_num'];
+    }
+
 
  function pz_setstyle() {
     wp_enqueue_style( 'pz_style', PZ_PLUGIN_DIR . 'build/blocks/subscribe/index.css');
@@ -88,6 +91,15 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
         global $wpdb;
         global $pz_personID;
 
+        // if this is not a subscriber, then the ID won't be set, in which case this 
+        // function shouldn't have been called, but just to be sure...
+        if( !isset($pz_personID) )  {return ("pz_none");}
+        
+        // handle possibility that shortcode parameter isn't set correctly or at all 
+        if( !isset($atts['slug'])) {
+            return( ">>>Shortcode must include a 'slug=value' parameter<<<" );
+        }
+
         // if looking for name or email, read record from startblock table
         if( $atts['slug'] == 'fname' ) {
             $entries = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $pz_personID");
@@ -97,7 +109,7 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
         if( $atts['slug'] == 'lname' ) {
             $entries = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $pz_personID");
             
-            return $entries[0]->lname;
+            return $entries[0]->lname; 
         }
         if( $atts['slug'] == 'email' ) {
             $entries = $wpdb->get_results("SELECT * FROM $this->startblock_tablename WHERE personID = $pz_personID");
@@ -108,13 +120,18 @@ define('PZ_PLUGIN_DIR', plugin_dir_path(__FILE__));
         // else, read any answer settings we have for the current user
         $entries = $wpdb->get_results("SELECT * FROM $this->question_tablename WHERE personID = $pz_personID");
 
+        $found = false;
+  
         ob_start();
 
         foreach($entries as $entry) {
             if( $atts['slug'] == $entry->qslug) {
                 echo $entry->qchoice;
+                $found = true;
             }
         }
+
+        if( !$found ) echo ">>> Slug parameter not found <<<";
         
         return ob_get_clean();
        

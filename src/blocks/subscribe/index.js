@@ -31,20 +31,24 @@ function EditComponent({ attributes, setAttributes }) {
     border_color,
     text_color,
     show_name,
+    buttonBackgroundColor,
+    buttonTextColor,
   } = attributes;
   const blockProps = useBlockProps();
 
   return (
     <div {...blockProps}>
       <InspectorControls>
-        <ToggleControl
-          label="Show name fields?"
-          value={show_name}
-          checked={show_name}
-          onChange={(v) => {
-            setAttributes({ show_name: v });
-          }}
-        />
+        <PanelBody title="Settings">
+          <ToggleControl
+            label="Show name fields?"
+            value={show_name}
+            checked={show_name}
+            onChange={(v) => {
+              setAttributes({ show_name: v });
+            }}
+          />
+        </PanelBody>
         <PanelBody title="Colors">
           <p>Background color</p>
           <ColorPalette
@@ -61,9 +65,21 @@ function EditComponent({ attributes, setAttributes }) {
             value={text_color}
             onChange={(newVal) => setAttributes({ text_color: newVal })}
           />
+          <p>Button background color</p>
+          <ColorPalette
+            value={buttonBackgroundColor}
+            onChange={(newVal) =>
+              setAttributes({ buttonBackgroundColor: newVal })
+            }
+          />
+          <p>Button text color</p>
+          <ColorPalette
+            value={buttonTextColor}
+            onChange={(newVal) => setAttributes({ buttonTextColor: newVal })}
+          />
         </PanelBody>
       </InspectorControls>
-      <div>
+      <div className="pz-subscribe-block">
         <p>
           This block creates a form that is displayed to the user to ask for
           their email and name. You determine the background and border colors,
@@ -105,6 +121,8 @@ function SaveComponent({ attributes }) {
     border_color,
     text_color,
     show_name,
+    buttonBackgroundColor,
+    buttonTextColor,
   } = attributes;
   const blockProps = useBlockProps.save();
 
@@ -112,7 +130,7 @@ function SaveComponent({ attributes }) {
   const url = new URL(thisURL);
   const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
   const pz_bg =
-    "border-width: 2px; background-color: " +
+    "border-width: 2px; border-radius: 4px; background-color: " +
     background_color +
     "; border-color: " +
     border_color +
@@ -124,8 +142,14 @@ function SaveComponent({ attributes }) {
     display_tag = "display: block";
   } else display_tag = "display: none";
 
+  const pz_button =
+    "border-width: 1px; border-radius: 2px; background-color: " +
+    buttonBackgroundColor +
+    "; color: " +
+    buttonTextColor;
+
   return (
-    <div className="pz-form-div" style={pz_bg}>
+    <div className="pz-form-div" {...blockProps} style={pz_bg}>
       <form action={adminPath} method="POST">
         <input
           type="hidden"
@@ -146,7 +170,11 @@ function SaveComponent({ attributes }) {
           <input type="text" name="lname" placeholder="Last name..." />
         </div>
         <p />
-        <button className="pz-startblock-button" variant="primary">
+        <button
+          className="pz-startblock-button"
+          style={pz_button}
+          variant="primary"
+        >
           Submit!
         </button>
       </form>

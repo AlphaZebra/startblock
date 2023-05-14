@@ -11,6 +11,9 @@
   "attributes": {
     "content": {
       "type": "string"
+    },
+    "altContent": {
+      "type": "string"
     }
   },
   "style": "file:./index.css"

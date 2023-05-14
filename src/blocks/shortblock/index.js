@@ -17,14 +17,22 @@ registerBlockType(block.name, {
 
 function EditComponent(props) {
   const { attributes } = props;
-  const { content } = attributes;
+  const { content, altContent } = attributes;
+  const blockProps = useBlockProps();
 
   return (
-    <div>
+    <div {...blockProps}>
+      <p>Normal shortcode content:</p>
       <TextareaControl
         label="This paragraph may contain shortcodes:"
         value={content}
         onChange={(newVal) => props.setAttributes({ content: newVal })}
+      />
+      <p>Alternate version without shortcodes:</p>
+      <TextareaControl
+        label="This paragraph should NOT contain shortcodes:"
+        value={altContent}
+        onChange={(newVal) => props.setAttributes({ altContent: newVal })}
       />
     </div>
   );

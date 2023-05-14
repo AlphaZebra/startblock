@@ -129,7 +129,7 @@ module.exports = window["wp"]["element"];
   \******************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/search-formshortblock","title":"ShortBlock","category":"text","description":"A text block that processes any shortcodes embedded in the text.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"}},"style":"file:./index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/search-formshortblock","title":"ShortBlock","category":"text","description":"A text block that processes any shortcodes embedded in the text.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"},"altContent":{"type":"string"}},"style":"file:./index.css"}');
 
 /***/ })
 
@@ -239,13 +239,21 @@ function EditComponent(props) {
     attributes
   } = props;
   const {
-    content
+    content,
+    altContent
   } = attributes;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+  const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)();
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Normal shortcode content:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
     label: "This paragraph may contain shortcodes:",
     value: content,
     onChange: newVal => props.setAttributes({
       content: newVal
+    })
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Alternate version without shortcodes:"), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextareaControl, {
+    label: "This paragraph should NOT contain shortcodes:",
+    value: altContent,
+    onChange: newVal => props.setAttributes({
+      altContent: newVal
     })
   }));
 }

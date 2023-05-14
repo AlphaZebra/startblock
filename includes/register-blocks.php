@@ -30,10 +30,18 @@ function pz_register() {
 
 
 function theBlockContent($attributes) {
-    $my_content = '<p>' . $attributes['content'] . '</p>';
-    // $my_content = $attributes['content'];
-    $my_content = do_shortcode( $my_content );
-    return $my_content;
+    global $pz_personID;
+    if( isset($pz_personID)) {
+        $my_content = '<p>' . $attributes['content'] . '</p>';
+        // $my_content = $attributes['content'];
+        $my_content = do_shortcode( $my_content );
+        return $my_content;
+    }
+    else {
+        $my_content = '<p>' . $attributes['altContent'] . '</p>';
+        return $my_content;
+    }
+    
 }
 
 function theListContent($attributes) {  // Callback render function for startlist block
