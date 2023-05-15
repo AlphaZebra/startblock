@@ -33,8 +33,10 @@ function EditComponent({ attributes, setAttributes }) {
     show_name,
     buttonBackgroundColor,
     buttonTextColor,
+    buttonContent,
   } = attributes;
   const blockProps = useBlockProps();
+  const [willShow, setWillShow] = useState(show_name);
 
   return (
     <div {...blockProps}>
@@ -42,9 +44,10 @@ function EditComponent({ attributes, setAttributes }) {
         <PanelBody title="Settings">
           <ToggleControl
             label="Show name fields?"
-            value={show_name}
-            checked={show_name}
+            value={willShow}
+            checked={willShow}
             onChange={(v) => {
+              setWillShow(v);
               setAttributes({ show_name: v });
             }}
           />
@@ -107,6 +110,15 @@ function EditComponent({ attributes, setAttributes }) {
             setAttributes({ nameContent: newVal });
           }}
         />
+        <TextControl
+          label="Enter button text..."
+          placeholder="Submit"
+          default="Submit"
+          value={buttonContent}
+          onChange={(newVal) => {
+            setAttributes({ buttonContent: newVal });
+          }}
+        />
       </div>
     </div>
   );
@@ -123,8 +135,10 @@ function SaveComponent({ attributes }) {
     show_name,
     buttonBackgroundColor,
     buttonTextColor,
+    buttonContent,
   } = attributes;
   const blockProps = useBlockProps.save();
+  let display_tag = "display: block";
 
   const thisURL = window.location.href;
   const url = new URL(thisURL);
@@ -137,13 +151,12 @@ function SaveComponent({ attributes }) {
     "; color: " +
     text_color;
 
-  var display_tag = "";
   if (show_name == true) {
     display_tag = "display: block";
   } else display_tag = "display: none";
 
   const pz_button =
-    "border-width: 1px; border-radius: 2px; background-color: " +
+    "border-width: 0px; border-radius: 2px; background-color: " +
     buttonBackgroundColor +
     "; color: " +
     buttonTextColor;
@@ -175,7 +188,7 @@ function SaveComponent({ attributes }) {
           style={pz_button}
           variant="primary"
         >
-          Submit!
+          {buttonContent}
         </button>
       </form>
     </div>

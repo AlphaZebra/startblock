@@ -18,6 +18,9 @@
     "titleContent": {
       "type": "string"
     },
+    "buttonContent": {
+      "type": "string"
+    },
     "background_color": {
       "type": "string",
       "default": "#f87171"

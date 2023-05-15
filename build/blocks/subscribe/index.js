@@ -156,7 +156,7 @@ function _extends() {
   \*****************************************/
 /***/ ((module) => {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/subscribe","title":"Subscribe","category":"text","description":"Block for initial request for email.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"},"nameContent":{"type":"string"},"titleContent":{"type":"string"},"background_color":{"type":"string","default":"#f87171"},"border_color":{"type":"string","default":"#f87100"},"text_color":{"type":"string","default":"#000000"},"buttonTextColor":{"type":"string","default":"#000000"},"buttonBackgroundColor":{"type":"string","default":"#FFFFFF"},"show_name":{"type":"boolean","default":"true"}},"style":"file:./index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":2,"name":"pz/subscribe","title":"Subscribe","category":"text","description":"Block for initial request for email.","version":"1","textdomain":"pz","editorScript":"file:./index.js","attributes":{"content":{"type":"string"},"nameContent":{"type":"string"},"titleContent":{"type":"string"},"buttonContent":{"type":"string"},"background_color":{"type":"string","default":"#f87171"},"border_color":{"type":"string","default":"#f87100"},"text_color":{"type":"string","default":"#000000"},"buttonTextColor":{"type":"string","default":"#000000"},"buttonBackgroundColor":{"type":"string","default":"#FFFFFF"},"show_name":{"type":"boolean","default":"true"}},"style":"file:./index.css"}');
 
 /***/ })
 
@@ -275,16 +275,19 @@ function EditComponent(_ref) {
     text_color,
     show_name,
     buttonBackgroundColor,
-    buttonTextColor
+    buttonTextColor,
+    buttonContent
   } = attributes;
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps)();
+  const [willShow, setWillShow] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.useState)(show_name);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", blockProps, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.PanelBody, {
     title: "Settings"
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.ToggleControl, {
     label: "Show name fields?",
-    value: show_name,
-    checked: show_name,
+    value: willShow,
+    checked: willShow,
     onChange: v => {
+      setWillShow(v);
       setAttributes({
         show_name: v
       });
@@ -341,6 +344,16 @@ function EditComponent(_ref) {
         nameContent: newVal
       });
     }
+  }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_4__.TextControl, {
+    label: "Enter button text...",
+    placeholder: "Submit",
+    default: "Submit",
+    value: buttonContent,
+    onChange: newVal => {
+      setAttributes({
+        buttonContent: newVal
+      });
+    }
   })));
 }
 function SaveComponent(_ref2) {
@@ -356,18 +369,19 @@ function SaveComponent(_ref2) {
     text_color,
     show_name,
     buttonBackgroundColor,
-    buttonTextColor
+    buttonTextColor,
+    buttonContent
   } = attributes;
   const blockProps = _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.useBlockProps.save();
+  let display_tag = "display: block";
   const thisURL = window.location.href;
   const url = new URL(thisURL);
   const adminPath = url.protocol + "//" + url.host + "/wp-admin/admin-post.php";
   const pz_bg = "border-width: 2px; border-radius: 4px; background-color: " + background_color + "; border-color: " + border_color + "; color: " + text_color;
-  var display_tag = "";
   if (show_name == true) {
     display_tag = "display: block";
   } else display_tag = "display: none";
-  const pz_button = "border-width: 1px; border-radius: 2px; background-color: " + buttonBackgroundColor + "; color: " + buttonTextColor;
+  const pz_button = "border-width: 0px; border-radius: 2px; background-color: " + buttonBackgroundColor + "; color: " + buttonTextColor;
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
     className: "pz-form-div"
   }, blockProps, {
@@ -405,7 +419,7 @@ function SaveComponent(_ref2) {
     className: "pz-startblock-button",
     style: pz_button,
     variant: "primary"
-  }, "Submit!")));
+  }, buttonContent)));
 }
 })();
 
