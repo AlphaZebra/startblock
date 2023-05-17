@@ -294,3 +294,15 @@ function drop_start_table() {
 
 
     $pzQuestions = new PZQuestions();
+
+    function pz_get_cookie_script() {
+        wp_enqueue_script(
+          "pz_get_cookie",
+          plugins_url("/src/blocks/subscribe/pz_get_cookie.js", __FILE__),
+          array(),
+          "1.0.0",
+          false
+        );
+      }
+      
+      add_action("wp_enqueue_scripts", "pz_get_cookie_script");

@@ -162,35 +162,38 @@ function SaveComponent({ attributes }) {
     buttonTextColor;
 
   return (
-    <div className="pz-form-div" {...blockProps} style={pz_bg}>
-      <form action={adminPath} method="POST">
-        <input
-          type="hidden"
-          className="pz-input"
-          name="action"
-          value="do-startblock"
-          required
-        />
+    <>
+      <div className="pz-form-div" {...blockProps} id="pzs" style={pz_bg}>
+        <form action={adminPath} method="POST">
+          <input
+            type="hidden"
+            className="pz-input"
+            name="action"
+            value="do-startblock"
+            required
+          />
 
-        <h4 className="pz-startblock-h4">{titleContent}</h4>
+          <h4 className="pz-startblock-h4">{titleContent}</h4>
 
-        <p className="pz-startblock-text">{content}</p>
-        <input type="email" name="email" placeholder="Email..." />
+          <p className="pz-startblock-text">{content}</p>
+          <input type="email" name="email" placeholder="Email..." />
 
-        <div style={display_tag}>
-          <p className="pz-startblock-text">{nameContent}</p>
-          <input type="text" name="fname" placeholder="First name..." />
-          <input type="text" name="lname" placeholder="Last name..." />
-        </div>
-        <p />
-        <button
-          className="pz-startblock-button"
-          style={pz_button}
-          variant="primary"
-        >
-          {buttonContent}
-        </button>
-      </form>
-    </div>
+          <div style={display_tag}>
+            <p className="pz-startblock-text">{nameContent}</p>
+            <input type="text" name="fname" placeholder="First name..." />
+            <input type="text" name="lname" placeholder="Last name..." />
+          </div>
+          <p />
+          <button
+            className="pz-startblock-button"
+            style={pz_button}
+            variant="primary"
+          >
+            {buttonContent}
+          </button>
+        </form>
+      </div>
+      <script>pz_vanishing_act();</script>
+    </>
   );
 }

@@ -382,9 +382,10 @@ function SaveComponent(_ref2) {
     display_tag = "display: block";
   } else display_tag = "display: none";
   const pz_button = "border-width: 0px; border-radius: 2px; background-color: " + buttonBackgroundColor + "; color: " + buttonTextColor;
-  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
+  return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("div", (0,_babel_runtime_helpers_extends__WEBPACK_IMPORTED_MODULE_0__["default"])({
     className: "pz-form-div"
   }, blockProps, {
+    id: "pzs",
     style: pz_bg
   }), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("form", {
     action: adminPath,
@@ -419,7 +420,7 @@ function SaveComponent(_ref2) {
     className: "pz-startblock-button",
     style: pz_button,
     variant: "primary"
-  }, buttonContent)));
+  }, buttonContent))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_1__.createElement)("script", null, "pz_vanishing_act();"));
 }
 })();
 
